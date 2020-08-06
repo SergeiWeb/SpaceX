@@ -4,12 +4,13 @@
 	"description": "gulp assembly",
 	"main": "index.html",
 	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
 		"gulp": "gulp"
 	},
 	"author": "Sergei",
 	"license": "ISC",
 	"devDependencies": {
-		"browser-sync": "^2.26.7",
+		"browser-sync": "^2.26.12",
 		"del": "^5.1.0",
 		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^7.0.1",
@@ -26,7 +27,7 @@
 		"gulp-ttf2woff2": "^3.0.0",
 		"gulp-uglify-es": "^2.0.0",
 		"gulp-webp": "^4.0.1",
-		"gulp-webp-html": "^1.0.2",
-		"gulp-webpcss": "^1.1.1"
+		"gulp-webp-css": "^1.1.0",
+		"gulp-webp-html": "^1.0.2"
 	}
 }
