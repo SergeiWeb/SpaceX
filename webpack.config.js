@@ -15,7 +15,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const PATHS = {
 	src: path.join(__dirname, '/src'),
 	dist: path.join(__dirname, '/public'),
-	assets: 'assets/'
+	assets: 'assets/',
 }
 
 const PAGES_DIR = PATHS.src
@@ -35,24 +35,30 @@ const optimization = () => {
 					name: 'vendors',
 					test: /node_modules/,
 					chunks: 'all',
-					enforce: true
-				}
-			}
-		}
+					enforce: true,
+				},
+			},
+		},
 	}
 
 	if (isProd) {
 		config.minimizer = [
 			new OptimizeCssAssetsWebpackPlugin(),
-			new TerserWebpackPlugin()
+			new TerserWebpackPlugin(),
 		]
 	}
 
 	return config
 }
 
-const filenameJS = ext => isDev ? `${PATHS.assets}js/[name].${ext}` : `${PATHS.assets}js/[name].[hash].${ext}`
-const filenameCSS = ext => isDev ? `${PATHS.assets}css/[name].${ext}` : `${PATHS.assets}css/[name].[hash].${ext}`
+const filenameJS = ext =>
+	isDev
+		? `${PATHS.assets}js/[name].${ext}`
+		: `${PATHS.assets}js/[name].[hash].${ext}`
+const filenameCSS = ext =>
+	isDev
+		? `${PATHS.assets}css/[name].${ext}`
+		: `${PATHS.assets}css/[name].[hash].${ext}`
 
 const cssLoaders = extra => {
 	const loaders = [
@@ -61,15 +67,17 @@ const cssLoaders = extra => {
 			loader: MiniCssExtractPlugin.loader,
 			options: {
 				hmr: isDev,
-				reloadAll: true
-			}
+				reloadAll: true,
+			},
 		},
-		'css-loader', {
+		'css-loader',
+		{
 			loader: 'postcss-loader',
-			options: { config: { path: `postcss.config.js` } }
-		}, {
-			loader: 'group-css-media-queries-loader'
-		}
+			options: { config: { path: `postcss.config.js` } },
+		},
+		{
+			loader: 'group-css-media-queries-loader',
+		},
 	]
 
 	if (extra) {
@@ -81,12 +89,8 @@ const cssLoaders = extra => {
 
 const babelObject = preset => {
 	const opts = {
-		presets: [
-			'@babel/preset-env',
-		],
-		plugins: [
-			'@babel/plugin-proposal-class-properties'
-		]
+		presets: ['@babel/preset-env'],
+		plugins: ['@babel/plugin-proposal-class-properties'],
 	}
 
 	if (preset) {
@@ -97,10 +101,12 @@ const babelObject = preset => {
 }
 
 const jsLoaders = () => {
-	const loaders = [{
-		loader: 'babel-loader',
-		options: babelObject()
-	}]
+	const loaders = [
+		{
+			loader: 'babel-loader',
+			options: babelObject(),
+		},
+	]
 
 	if (isDev) {
 		loaders.push('eslint-loader')
@@ -115,20 +121,25 @@ const plugins = () => {
 		new CleanWebpackPlugin({
 			dry: true,
 		}),
-		new CopyWebpackPlugin([
-			{ from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
-			{ from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },
-			{ from: `${PATHS.src}/static`, to: `` }
-		]),
+		new CopyWebpackPlugin({
+			patterns: [
+				{ from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
+				{
+					from: `${PATHS.src}/${PATHS.assets}fonts`,
+					to: `${PATHS.assets}fonts`,
+				},
+				{ from: `${PATHS.src}/static`, to: `` },
+			],
+		}),
 		new ImageminWebpackPlugin({
 			test: /\.(jpe?g|png|gif|svg)$/,
 			disable: isProd,
 			pngquant: {
-				quality: '75'
-			}
+				quality: '75',
+			},
 		}),
 		new MiniCssExtractPlugin({
-			filename: filenameCSS('css')
+			filename: filenameCSS('css'),
 		}),
 		new ImageminWebpWebpackPlugin(),
 		...PAGES.map(
@@ -137,10 +148,10 @@ const plugins = () => {
 					template: `${PAGES_DIR}/${page}`,
 					filename: `./${page}`,
 					minify: {
-						collapseWhitespace: isProd
-					}
+						collapseWhitespace: isProd,
+					},
 				})
-		)
+		),
 	]
 
 	if (isProd) {
@@ -156,23 +167,23 @@ module.exports = {
 		app: ['@babel/polyfill', `${PATHS.src}/index.js`],
 	},
 	externals: {
-		paths: PATHS
+		paths: PATHS,
 	},
 	output: {
 		filename: filenameJS('js'),
 		path: PATHS.dist,
-		publicPath: '/'
+		publicPath: '/',
 	},
 	resolve: {
 		extensions: ['.js', '.json', '.xml', '.csv', '.png', '.sass', '.scss'],
 		alias: {
-			'~': PATHS.src
-		}
+			'~': PATHS.src,
+		},
 	},
 	optimization: optimization(),
 	devServer: {
 		port: 8081,
-		hot: isDev
+		hot: isDev,
 	},
 	devtool: isDev ? 'source-map' : '',
 	plugins: plugins(),
@@ -180,36 +191,42 @@ module.exports = {
 		rules: [
 			{
 				test: /\.css$/,
-				use: cssLoaders()
-			}, {
+				use: cssLoaders(),
+			},
+			{
 				test: /\.s[ac]ss$/,
-				use: cssLoaders('sass-loader')
-			}, {
+				use: cssLoaders('sass-loader'),
+			},
+			{
 				test: /\.(jpe?g|png)$/i,
 				loader: multi(
 					'file-loader?name=[name].[ext].webp!webp-loader?{quality: 70}',
 					'file-loader?name=[name].[ext]'
 				),
 				options: {
-					quality: 70
-				}
-			}, {
+					quality: 70,
+				},
+			},
+			{
 				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
 				loader: 'file-loader',
 				options: {
-					name: '[name].[ext]'
-				}
-			}, {
+					name: '[name].[ext]',
+				},
+			},
+			{
 				test: /\.xml$/,
-				use: ['xml-loader']
-			}, {
+				use: ['xml-loader'],
+			},
+			{
 				test: /\.csv$/,
-				use: ['csv-loader']
-			}, {
+				use: ['csv-loader'],
+			},
+			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				use: jsLoaders()
+				use: jsLoaders(),
 			},
-		]
-	}
+		],
+	},
 }
