@@ -55,6 +55,7 @@ const filenameJS = ext =>
 	isDev
 		? `${PATHS.assets}js/[name].${ext}`
 		: `${PATHS.assets}js/[name].[hash].${ext}`
+
 const filenameCSS = ext =>
 	isDev
 		? `${PATHS.assets}css/[name].${ext}`
@@ -182,7 +183,7 @@ module.exports = {
 	},
 	optimization: optimization(),
 	devServer: {
-		port: 8081,
+		port: 8080,
 		hot: isDev,
 	},
 	devtool: isDev ? 'source-map' : '',
