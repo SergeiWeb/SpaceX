@@ -31,11 +31,22 @@
 		&-title
 			font-size: 64px
 			line-height: 75px
+			font-weight: 400
 			color: $white
 		&-description
-			margin: 0 auto
+			margin: auto
 			color: $white
 			font-size: 16px
 			font-weight: 300
 			line-height: 22px
 			max-width: 270px
+			position: relative
+			&::after
+				content: ''
+				position: absolute;
+				width: 1px
+				height: 60px
+				background: $white
+				top: 170%
+				left: 50%
+				transform: translateX(-50%)
