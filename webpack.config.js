@@ -130,6 +130,7 @@ const plugins = () => {
 					to: `${PATHS.assets}fonts`,
 				},
 				{ from: `${PATHS.src}/static`, to: `` },
+				{ from: `${PATHS.src}/${PATHS.assets}video`, to: `${PATHS.assets}video` },
 			],
 		}),
 		new ImageminWebpackPlugin({

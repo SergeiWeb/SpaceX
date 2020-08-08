@@ -1,1 +1,2 @@
-import 'vidbg/dist/vidbg'
+import './modules/videobg'
+import './plugins/rellax'
