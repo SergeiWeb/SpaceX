@@ -185,11 +185,11 @@ module.exports = {
 	optimization: optimization(),
 	devServer: {
 		port: 3000,
-		inline: true,
 		hot: isDev,
-		hotOnly: false,
-		liveReload: isDev,
-		watchContentBase: true
+		watchContentBase: true,
+		// inline: true,
+		// hotOnly: false,
+		// liveReload: isDev
 	},
 	devtool: isDev ? 'source-map' : '',
 	plugins: plugins(),
