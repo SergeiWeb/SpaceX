@@ -130,15 +130,11 @@ const plugins = () => {
 					to: `${PATHS.assets}fonts`,
 				},
 				{ from: `${PATHS.src}/static`, to: `` },
-				{ from: `${PATHS.src}/${PATHS.assets}video`, to: `${PATHS.assets}video` },
+				{
+					from: `${PATHS.src}/${PATHS.assets}video`,
+					to: `${PATHS.assets}video`,
+				},
 			],
-		}),
-		new ImageminWebpackPlugin({
-			test: /\.(jpe?g|png|gif|svg)$/,
-			disable: isProd,
-			pngquant: {
-				quality: '75',
-			},
 		}),
 		new MiniCssExtractPlugin({
 			filename: filenameCSS('css'),
@@ -157,7 +153,16 @@ const plugins = () => {
 	]
 
 	if (isProd) {
-		base.push(new BundleAnalyzerPlugin())
+		base.push(
+			new BundleAnalyzerPlugin(),
+			new ImageminWebpackPlugin({
+				test: /\.(jpe?g|png|gif|svg)$/,
+				disable: isProd,
+				pngquant: {
+					quality: '75',
+				},
+			})
+		)
 	}
 
 	return base
