@@ -1,4 +1,5 @@
 .features
+	padding: 0 15px 30px
 	.overview
 		display: flex
 		align-items: center
@@ -44,6 +45,7 @@
 
 @media screen and ( max-width: 980px )
 	.features
+		padding-top: 10px
 		&-table
 			margin-top: 40px
 		.table
@@ -81,3 +83,33 @@
 			&-text
 				margin-top: 35px
 				max-width: 100%
+
+@media screen and ( max-width: 380px )
+	.features
+		padding-top: 30px
+		&-title
+			font-size: 18px
+			line-height: 25px
+		&-table
+			margin-top: 25px
+			td
+				font-size: 13px
+				line-height: 25px
+		.table
+			border-spacing: 0 10px
+			&-column
+				width: 50%
+
+		&-content
+			margin-top: 60px
+		.content
+			&-title
+				font-size: 18px
+				line-height: 25px
+			&-text
+				margin-top: 25px
+				font-size: 14px
+				line-height: 28px
+
+		&-image
+			display: none
