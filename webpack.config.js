@@ -118,10 +118,8 @@ const jsLoaders = () => {
 
 const plugins = () => {
 	const base = [
+		new CleanWebpackPlugin(),
 		new webpack.ProgressPlugin(),
-		new CleanWebpackPlugin({
-			dry: true,
-		}),
 		new CopyWebpackPlugin({
 			patterns: [
 				{ from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
@@ -179,7 +177,7 @@ module.exports = {
 	output: {
 		filename: filenameJS('js'),
 		path: PATHS.dist,
-		publicPath: '/',
+		publicPath: './',
 	},
 	resolve: {
 		extensions: ['.js', '.json', '.xml', '.csv', '.png', '.sass', '.scss'],
